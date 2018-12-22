@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
@@ -78,6 +79,12 @@ app.use('/user', user)
 app.use('/upload', upload)
 app.use('/files', file)
 
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('client/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 //server
 app.listen(dbconfig.port, () => console.log(`running on port ${dbconfig.port}`))
