@@ -57,7 +57,7 @@ router.post('/login', passport.authenticate('local', ),
     }
     else{
       res.status(200).send("yes")
-      console.log(req.session);
+      //console.log(req.session);
     }
   },
 );
